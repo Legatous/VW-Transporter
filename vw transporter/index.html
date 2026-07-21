@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="style.css">
+<title>VW Transporter Camper Layout — Editable</title>
+<style>
+ 
+</style>
+</head>
+<body>
+
+<h1>VW Transporter — Camper Van</h1>
+<div class="sub">Drag any piece to reposition it. Drag the small corner handle to resize. Scale: ~2 px per cm.</div>
+
+<div class="toolbar">
+  <button id="resetBtn">Reset layout</button>
+  <button id="zoomOutBtn">Zoom out −</button>
+  <button id="zoomInBtn">Zoom in +</button>
+  <button id="zoomResetBtn">100%</button>
+</div>
+
+<div class="plan-wrap" id="planWrap">
+  <div class="dims">↑ Front (cab) — Rear doors ↓</div>
+  <div class="dims" style="color:var(--accent); margin-bottom:12px;">295 × 165 cm interior (L × W)</div>
+
+  <div class="van" id="van">
+
+    <div class="cell" id="cab" style="top:6px; left:6px; width:318px; height:64px;">
+      <div class="seat" id="seatL" style="top:6px; left:6px; width:150px; height:52px;">Driver<br>(swivel)</div>
+      <div class="seat" id="seatR" style="top:6px; left:162px; width:150px; height:52px;">Passenger<br>(swivel)</div>
+    </div>
+
+    <div class="cell" id="fridge" style="top:76px; left:6px; width:150px; height:150px;">
+      <div class="label">Fridge</div>
+      <div class="dim">60w × 40d cm</div>
+      <div class="livecm"></div>
+      <div class="resize-handle"></div>
+    </div>
+
+    <div class="cell" id="bed" style="top:76px; left:156px; width:168px; height:250px;">
+      <div class="label">Permanent Bed</div>
+      <div class="dim">180-190 × 60-70 cm</div>
+      <div class="livecm"></div>
+      <div class="resize-handle"></div>
+    </div>
+
+    <div class="cell" id="shower" style="top:226px; left:6px; width:150px; height:160px;">
+      <div class="label">Shower Pan</div>
+      <div class="dim">55 × 55 cm pan</div>
+      <div class="livecm"></div>
+      <div class="resize-handle"></div>
+    </div>
+
+    <div class="cell" id="potti" style="top:326px; left:156px; width:80px; height:110px;">
+      <div class="label">Toilet</div>
+      <div class="dim">60d × 40w cm</div>
+      <div class="livecm"></div>
+      <div class="resize-handle"></div>
+    </div>
+
+    <div class="cell" id="sinkcab" style="top:326px; left:242px; width:82px; height:110px;">
+      <div class="label">Sink Cab.</div>
+      <div class="dim">60d × 40w cm</div>
+      <div class="dim">Fresh/grey water below</div>
+      <div class="livecm"></div>
+      <div class="resize-handle"></div>
+    </div>
+
+    <div class="cell" id="rear" style="top:436px; left:6px; width:318px; height:148px;">
+      Rear Double Doors
+    </div>
+
+  </div>
+</div>
+
+<div class="legend">
+  <h2>How to edit</h2>
+  <ul>
+    <li>Click and drag any block by its body to move it.</li>
+    <li>Drag the small dark square in a block's corner to resize it.</li>
+    <li>Live size in cm shows below each label while you resize (scale: 330px ≈ 165cm wide, 590px ≈ 295cm long).</li>
+    <li>Cab and rear-door blocks are fixed in place (front/back walls).</li>
+    <li>"Reset layout" restores the suggested arrangement.</li>
+  </ul>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

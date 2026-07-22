@@ -3,28 +3,36 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="style.css">
-<title>VW Transporter Camper Layout — Editable</title>
-<style>
- 
-</style>
+<title>Camper Layout — Editable, Multi-Van</title>
 </head>
 <body>
-
-<h1>VW Transporter — Camper Van</h1>
-<div class="sub">Drag any piece to reposition it. Drag the small corner handle to resize. Scale: ~2 px per cm.</div>
+<h1>Camper Layout — Multi-Van</h1>
+<div class="sub">Pick a van to compare its real footprint. Drag pieces to reposition, drag the corner handle to resize. The shaded band shows where wheel-arch intrusion narrows the floor.</div>
 
 <div class="toolbar">
+  <select id="vanSelect">
+    <option value="vw">VW Transporter T6 L2</option>
+    <option value="ford">Ford Transit Custom L2</option>
+    <option value="renault">Renault Trafic L2</option>
+  </select>
   <button id="resetBtn">Reset layout</button>
-  <button id="zoomOutBtn">Zoom out −</button>
-  <button id="zoomInBtn">Zoom in +</button>
+  <button id="zoomOutBtn">Zoom −</button>
+  <button id="zoomInBtn">Zoom +</button>
   <button id="zoomResetBtn">100%</button>
 </div>
 
+<div class="vanSpecBox" id="vanSpecBox"></div>
+
 <div class="plan-wrap" id="planWrap">
   <div class="dims">↑ Front (cab) — Rear doors ↓</div>
-  <div class="dims" style="color:var(--accent); margin-bottom:12px;">295 × 165 cm interior (L × W)</div>
+  <div class="dims accent" id="dimsLine">295 × 165 cm interior (L × W)</div>
 
   <div class="van" id="van">
+
+    <div class="archZone" id="archZoneL"></div>
+    <div class="archZone" id="archZoneR"></div>
+    <div class="archLabel" id="archLabelL">arch</div>
+    <div class="archLabel" id="archLabelR">arch</div>
 
     <div class="cell" id="cab" style="top:6px; left:2px; width:318px; height:64px;">
       <div class="seat" id="seatL" style="top:6px; left:6px; width:150px; height:52px;">Driver<br>(swivel)</div>
@@ -40,14 +48,14 @@
 
     <div class="cell" id="bed" style="top:76px; left:156px; width:168px; height:250px;">
       <div class="label">Permanent Bed</div>
-      <div class="dim">180-190 × 60-70 cm</div>
+      <div class="dim">180-200 × 65-75 cm</div>
       <div class="livecm"></div>
       <div class="resize-handle"></div>
     </div>
 
     <div class="cell" id="shower" style="top:226px; left:6px; width:150px; height:160px;">
-      <div class="label">Shower Pan</div>
-      <div class="dim">55 × 55 cm pan</div>
+      <div class="label">Shower / Walkway</div>
+      <div class="dim">doubles as aisle</div>
       <div class="livecm"></div>
       <div class="resize-handle"></div>
     </div>
@@ -77,14 +85,17 @@
 <div class="legend">
   <h2>How to edit</h2>
   <ul>
+    <li>Switch vans with the dropdown — dimensions and the wheel-arch band update to that model's real interior specs.</li>
     <li>Click and drag any block by its body to move it.</li>
     <li>Drag the small dark square in a block's corner to resize it.</li>
-    <li>Live size in cm shows below each label while you resize (scale: 330px ≈ 165cm wide, 590px ≈ 295cm long).</li>
+    <li>Live size in cm shows below each label while you resize.</li>
+    <li>The tan shaded band is the wheel-arch intrusion zone — cabinets crossing it need to be shallower there.</li>
     <li>Cab and rear-door blocks are fixed in place (front/back walls).</li>
-    <li>"Reset layout" restores the suggested arrangement.</li>
+    <li>"Reset layout" restores the suggested arrangement for the current van.</li>
   </ul>
 </div>
 
 <script src="script.js"></script>
 </body>
 </html>
+

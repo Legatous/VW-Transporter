@@ -1,6 +1,83 @@
 const van = document.getElementById('van');
-const PX_PER_CM_X = 330/165;
-const PX_PER_CM_Y = 590/295;
+const dimsLine = document.getElementById('dimsLine');
+const specBox = document.getElementById('vanSpecBox');
+const archZoneL = document.getElementById('archZoneL');
+const archZoneR = document.getElementById('archZoneR');
+const archLabelL = document.getElementById('archLabelL');
+const archLabelR = document.getElementById('archLabelR');
+
+// Real interior specs, all in cm. Arch zone = the middle stretch (roughly)
+// where the wheel arches intrude, narrowing usable width from maxWidth to archWidth.
+const VANS = {
+  vw: {
+    name: 'VW Transporter T6/T6.1 L2 (LWB)',
+    length: 295, maxWidth: 165, archWidth: 132,
+    archStart: 0.30, archEnd: 0.62, // fraction of length where arches sit
+    height: 132,
+    note: 'Standard roof height ~132 cm — no standing room, fine for sit/crouch use.'
+  },
+  ford: {
+    name: 'Ford Transit Custom L2 H1',
+    length: 292, maxWidth: 177, archWidth: 139,
+    archStart: 0.32, archEnd: 0.60,
+    height: 141,
+    note: 'Widest arch-to-arch gap of the three — easiest fit for a 65-75cm bed plus cabinets.'
+  },
+  renault: {
+    name: 'Renault Trafic L2 H1',
+    length: 294, maxWidth: 166, archWidth: 127,
+    archStart: 0.30, archEnd: 0.62,
+    height: 139,
+    note: 'Narrowest arch-to-arch width of the three — tightest squeeze for wide beds.'
+  }
+};
+
+let PX_PER_CM_X, PX_PER_CM_Y;
+const VAN_PX_W = 330, VAN_PX_H = 590;
+
+function applyVan(key){
+  const v = VANS[key];
+  PX_PER_CM_X = VAN_PX_W / v.maxWidth;
+  PX_PER_CM_Y = VAN_PX_H / v.length;
+
+  dimsLine.textContent = v.length + ' × ' + v.maxWidth + ' cm interior (L × W), ' + v.archWidth + ' cm between wheel arches';
+
+  specBox.innerHTML =
+    '<b>' + v.name + '</b><br>' +
+    'Max floor width: <b>' + v.maxWidth + ' cm</b> · Between wheel arches: <b>' + v.archWidth + ' cm</b><br>' +
+    'Load length: <b>' + v.length + ' cm</b> · Roof height: <b>' + v.height + ' cm</b><br>' +
+    v.note;
+
+  // arch intrusion per side, in px
+  const totalNarrow = v.maxWidth - v.archWidth; // total cm lost across both sides
+  const perSideCm = totalNarrow / 2;
+  const perSidePx = perSideCm * PX_PER_CM_X;
+
+  const zoneTop = v.archStart * VAN_PX_H;
+  const zoneH = (v.archEnd - v.archStart) * VAN_PX_H;
+
+  archZoneL.style.top = zoneTop + 'px';
+  archZoneL.style.height = zoneH + 'px';
+  archZoneL.style.left = '0px';
+  archZoneL.style.width = perSidePx + 'px';
+
+  archZoneR.style.top = zoneTop + 'px';
+  archZoneR.style.height = zoneH + 'px';
+  archZoneR.style.right = '0px';
+  archZoneR.style.width = perSidePx + 'px';
+
+  archLabelL.style.top = (zoneTop + zoneH/2 - 5) + 'px';
+  archLabelL.style.left = '2px';
+  archLabelR.style.top = (zoneTop + zoneH/2 - 5) + 'px';
+  archLabelR.style.right = '2px';
+
+  archZoneL.style.display = perSidePx > 2 ? 'block' : 'none';
+  archZoneR.style.display = perSidePx > 2 ? 'block' : 'none';
+  archLabelL.style.display = perSidePx > 14 ? 'block' : 'none';
+  archLabelR.style.display = perSidePx > 14 ? 'block' : 'none';
+
+  document.querySelectorAll('.cell').forEach(updateLiveCm);
+}
 
 const initialState = {};
 function captureInitial(){
@@ -43,7 +120,6 @@ function makeDraggable(el){
     el.style.zIndex = '';
   });
 
-  // touch support
   el.addEventListener('touchstart', (e)=>{
     if(e.target.classList.contains('resize-handle')) return;
     dragging = true;
@@ -122,6 +198,11 @@ document.querySelectorAll('.seat').forEach(el=>{
 });
 
 captureInitial();
+applyVan('vw');
+
+document.getElementById('vanSelect').addEventListener('change', (e)=>{
+  applyVan(e.target.value);
+});
 
 document.getElementById('resetBtn').addEventListener('click', ()=>{
   Object.keys(initialState).forEach(id=>{

@@ -1,12 +1,17 @@
- :root{
+:root{
     --wood-dark:#8a6238;
     --steel:#3c4a52;
     --cream:#f4efe6;
     --panel:#e9e2d4;
     --accent:#c0492e;
+    --arch:#d9b98a;
     --ink:#242220;
   }
   *{box-sizing:border-box;}
+  html, body{
+    max-width:100%;
+    overflow-x:hidden;
+  }
   body{
     margin:0;
     background:var(--steel);
@@ -16,6 +21,7 @@
     flex-direction:column;
     align-items:center;
     padding:24px 16px 60px;
+    width:100%;
   }
   h1{
     color:var(--cream);
@@ -28,16 +34,19 @@
     color:#b7c2c7;
     font-size:.7rem;
     letter-spacing:.06em;
-    margin-bottom:16px;
+    margin-bottom:14px;
     text-align:center;
-    max-width:340px;
+    max-width:360px;
   }
   .toolbar{
     display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
     gap:8px;
-    margin-bottom:14px;
+    margin-bottom:10px;
+    max-width:358px;
   }
-  .toolbar button{
+  .toolbar button, .toolbar select{
     font-family:inherit;
     font-size:.65rem;
     letter-spacing:.05em;
@@ -49,7 +58,21 @@
     cursor:pointer;
   }
   .toolbar button:active{ transform:translateY(1px); }
+  .vanSpecBox{
+    width:330px;
+    max-width:100%;
+    background:var(--cream);
+    border:2px solid var(--ink);
+    border-radius:4px;
+    padding:8px 10px;
+    font-size:.6rem;
+    line-height:1.5;
+    margin-bottom:12px;
+  }
+  .vanSpecBox b{ color:var(--accent); }
   .plan-wrap{
+    width:358px;
+    max-width:100%;
     background:var(--cream);
     border:3px solid var(--ink);
     border-radius:4px;
@@ -58,31 +81,19 @@
     transform-origin: top center;
     transition: transform .15s ease;
     position:relative;
-  }
-  .dimLine{
-    position:absolute;
-    color:var(--accent);
-    font-size:.62rem;
-    font-weight:bold;
-    white-space:nowrap;
-  }
-  #vanLenLabel{
-    left:-38px; top:290px;
-    transform:rotate(-90deg) translateX(50%);
-    transform-origin:left center;
-  }
-  #vanWidthLabel{
-    left:50%; bottom:-30px;
-    transform:translateX(-50%);
+    margin:0 auto;
   }
   .dims{
     text-align:center;
     font-size:.68rem;
     letter-spacing:.08em;
-    margin-bottom:8px;
+    margin-bottom:4px;
     color:var(--wood-dark);
     text-transform:uppercase;
+    white-space:normal;
+    word-break:break-word;
   }
+  .dims.accent{ color:var(--accent); margin-bottom:12px; }
   .van{
     position:relative;
     width:330px;
@@ -92,6 +103,25 @@
     border-radius:26px 26px 10px 10px;
     overflow:hidden;
     touch-action:none;
+  }
+  .archZone{
+    position:absolute;
+    background:var(--arch);
+    opacity:.55;
+    z-index:1;
+    pointer-events:none;
+    border-top:2px dashed #a9824f;
+    border-bottom:2px dashed #a9824f;
+  }
+  .archLabel{
+    position:absolute;
+    z-index:2;
+    font-size:.52rem;
+    color:#7a5321;
+    font-weight:bold;
+    letter-spacing:.03em;
+    pointer-events:none;
+    text-transform:uppercase;
   }
   .cell{
     position:absolute;
@@ -107,6 +137,7 @@
     padding:4px;
     cursor:move;
     user-select:none;
+    z-index:5;
   }
   .cell.locked{ cursor:default; }
   .cell .label{
@@ -149,8 +180,8 @@
     font-weight:bold;
     cursor:move;
     user-select:none;
+    z-index:6;
   }
-  #kitchen{ background:#f7f1e3; }
   #fridge{ background:#e3ecec; }
   #bed{ background:repeating-linear-gradient(45deg,#e7cfa1,#e7cfa1 10px,#f2e3c4 10px,#f2e3c4 20px); }
   #shower{ background:#dceef2; }
@@ -165,14 +196,16 @@
     color:var(--wood-dark);
     border-style:dashed;
     cursor:default;
+    z-index:5;
   }
   .legend{
-    margin-top:22px;
+    margin-top:18px;
     background:var(--cream);
     border:3px solid var(--ink);
     border-radius:4px;
     padding:12px 16px;
     width:330px;
+    max-width:100%;
     font-size:.65rem;
   }
   .legend h2{
